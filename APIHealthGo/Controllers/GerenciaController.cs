@@ -33,7 +33,7 @@ namespace APIHealthGo.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageResponse>> Post(GerenciaInsertDTO gerencia)
         {
-            return Ok(await _service.Post(genecia));
+            return Ok(await _service.Post(gerencia));
         }
 
     }

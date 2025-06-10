@@ -8,6 +8,6 @@ namespace APIHealthGo.Contracts.Service
     {
         Task<GerenciaGetAllResponse> GetAllGerencia();
         Task<GerenciaEntity> GetGerenciaById(int id);
-        Task<GerenciaInsertDTO> Post(GerenciaInsertDTO gerencia);
+        Task<MessageResponse> Post(GerenciaInsertDTO gerencia);
     }
 }
