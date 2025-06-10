@@ -4,11 +4,13 @@ using APIHealthGo.Services;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.DTO;
+using MyFirstCRUD.Entity;
 
 namespace APIHealthGo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class GerenciaController : ControllerBase
     {
         private IGerenciaService _service;
@@ -34,6 +36,18 @@ namespace APIHealthGo.Controllers
         public async Task<ActionResult<MessageResponse>> Post(GerenciaInsertDTO gerencia)
         {
             return Ok(await _service.Post(gerencia));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<MessageResponse>> Update(GerenciaEntity gerencia)
+        {
+            return Ok(await _service.Update(gerencia));
+        }
+
+        [HttpDelete("(id)")]
+        public async Task<ActionResult<MessageResponse>> Delete(int id)
+        {
+            return Ok(await _service.Delete(id));
         }
 
     }

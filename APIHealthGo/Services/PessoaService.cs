@@ -17,8 +17,6 @@ namespace APIHealthGo.Services
                 Data = await _repository.GetAllPessoa()
             };
         }
-
-
         public async Task<PessoaEntity> GetPessoaById(int id)
         {
             PessoaRepository _repository = new PessoaRepository();
@@ -37,10 +35,10 @@ namespace APIHealthGo.Services
         public async Task<MessageResponse> Update(PessoaEntity pessoa)
         {
             PessoaRepository _repository = new PessoaRepository();
-            await _repository.DeletePessoa(pessoa);
+            await _repository.UpdatePessoa(pessoa);
             return new MessageResponse
             {
-                message = "Pessoa inserida com sucesso!"
+                message = "Pessoa atualizada com sucesso!"
             };
         }
         public async Task<MessageResponse> Delete(int id)

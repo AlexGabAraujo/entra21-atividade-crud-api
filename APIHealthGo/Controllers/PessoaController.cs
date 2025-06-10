@@ -38,16 +38,17 @@ namespace APIHealthGo.Controllers
             return Ok(await _service.Post(mecanico));
         }
 
-        [HttpDelete ("(id)")]
-        public async  Task<ActionResult<MessageResponse>> Delete(int id )
-        {
-            return Ok(await _service.Delete(id));
-        }
-
         [HttpPut]
         public async Task<ActionResult<MessageResponse>> Update(PessoaEntity pessoa)
         {
             return Ok(await _service.Update(pessoa));
         }
+
+        [HttpDelete("(id)")]
+        public async Task<ActionResult<MessageResponse>> Delete(int id)
+        {
+            return Ok(await _service.Delete(id));
+        }
+
     }
 }
