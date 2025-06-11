@@ -18,6 +18,6 @@ namespace MinhaPrimeiraApi.Contracts.Repository
 
         Task Delete(int id);
 
-        Task Update(AssentoEntity aviao);
+        Task Update(AssentoEntity assento);
     }
 }

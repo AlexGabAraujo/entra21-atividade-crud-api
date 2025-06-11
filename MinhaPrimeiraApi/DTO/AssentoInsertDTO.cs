@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.DTO
 {
-    internal class AssentoInsertDTO
+    public class AssentoInsertDTO
     {
         public string Numero { get; set; }
         public string Tipo { get; set; }

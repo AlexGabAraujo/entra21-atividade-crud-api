@@ -7,7 +7,7 @@ using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace MinhaPrimeiraApi.Entity
 {
-    class AviaoEntity
+    public class AviaoEntity
     {
         public int Id { get; set; }
         public int QuantidadeVaga { get; set; }

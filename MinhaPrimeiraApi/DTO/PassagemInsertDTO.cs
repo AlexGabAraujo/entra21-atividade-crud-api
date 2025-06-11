@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.DTO
 {
-    class PassagemInsertDTO
+    public class PassagemInsertDTO
     {
         public decimal Preco { get; set; }
         public int Assento_Id { get; set; }

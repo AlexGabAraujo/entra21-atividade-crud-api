@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.Entity
 {
-    class PassagemEntity
+    public class PassagemEntity
     {
         public int Id {  get; set; }
         public decimal Preco {  get; set; }

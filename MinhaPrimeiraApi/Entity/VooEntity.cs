@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.Entity
 {
-    class VooEntity
+    public class VooEntity
     {
         public int Id { get; set; }
         public string CodigoVoo { get; set; }

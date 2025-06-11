@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.DTO
 {
-    class VooInsertDTO
+    public class VooInsertDTO
     {
         public string CodigoVoo {  get; set; }
         public DateTime DataHoraPartida { get; set; }
