@@ -19,21 +19,18 @@ namespace MyFirstCRUD.Repository
         {
             _connection = connection;
         }
-
-
         public async Task<IEnumerable<GerenciaEntity>> GetAllGerencia()
         {
 
             using (MySqlConnection con = _connection.GetConnection())
             {
-                string sql = @"SELECT * FROM GERENCIA";
+                string sql = @"SELECT * FROM GERENCIA ";
 
                 IEnumerable<GerenciaEntity> gerenciaList = await con.QueryAsync<GerenciaEntity>(sql);
                 return gerenciaList;
             }
 
         }
-
 
 
         public async Task<GerenciaEntity> GetGerenciaById(int id)
