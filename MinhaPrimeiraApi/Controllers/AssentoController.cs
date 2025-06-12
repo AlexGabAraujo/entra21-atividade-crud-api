@@ -15,9 +15,9 @@ namespace MinhaPrimeiraApi.Controllers
     {
         private IAssentoService _service;
 
-        public AssentoController()
+        public AssentoController(IAssentoService assentoService)
         {
-            _service = new AssentoService();
+            _service = assentoService;
         }
 
         [HttpGet]

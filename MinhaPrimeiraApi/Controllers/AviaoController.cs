@@ -14,9 +14,9 @@ namespace MinhaPrimeiraApi.Controllers
     {
         private IAviaoService _service;
 
-        public AviaoController()
+        public AviaoController(IAviaoService aviaoService)
         {
-            _service = new AviaoService();
+            _service = aviaoService;
         }
 
         [HttpGet]

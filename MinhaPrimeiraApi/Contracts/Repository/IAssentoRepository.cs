@@ -8,7 +8,7 @@ using MinhaPrimeiraApi.Entity;
 
 namespace MinhaPrimeiraApi.Contracts.Repository
 {
-    internal interface IAssentoRepository
+    public interface IAssentoRepository
     {
         Task<IEnumerable<AssentoEntity>> GetAll();
 

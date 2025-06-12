@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 using MySql.Data.MySqlClient;
 
 namespace MinhaPrimeiraApi.Infrastructure
 {
-    public class Connection
+    public class Connection : IConnection
     {
         protected string connectionString = "Server=localhost;Database=healthgo;User=root;Password=root;";
 

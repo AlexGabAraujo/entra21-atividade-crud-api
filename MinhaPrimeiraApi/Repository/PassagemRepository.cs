@@ -9,14 +9,21 @@ using MinhaPrimeiraApi.Entity;
 using Dapper;
 using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 
 namespace MinhaPrimeiraApi.Repository
 {
     class PassagemRepository : IPassagemRepository
     {
+        private IConnection _connection;
+
+        public PassagemRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<PassagemEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -35,7 +42,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<PassagemEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -56,7 +62,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Insert(PassagemInsertDTO passagem)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO PASSAGEM (PRECO, ASSENTO_ID, VOO_ID, ORDEMSERVICO_ID)
                     VALUES (@Preco, @Assento_Id, @Voo_Id, @OrdemServico_Id)
@@ -67,7 +72,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(PassagemEntity passagem)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 UPDATE PASSAGEM
                     SET PRECO = @Preco,
@@ -82,7 +86,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM PASSAGEM WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });

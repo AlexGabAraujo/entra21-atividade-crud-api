@@ -11,14 +11,21 @@ using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
 using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 
 namespace MinhaPrimeiraApi.Repository
 {
     class AviaoRepository : IAviaoRepository
     {
+        private IConnection _connection;
+
+        public AviaoRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<AviaoEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -38,7 +45,6 @@ namespace MinhaPrimeiraApi.Repository
         }
         public async Task Insert(AviaoInsertDTO aviao)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO AVIAO (QUANTIDADEVAGA, CODIGOREGISTRO, COMPANHIA, MODELO, FABRICANTE)
                                 VALUES (@QuantidadeVaga, @CodigoRegistro, @Companhia, @Modelo, @Fabricante)
@@ -49,7 +55,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM AVIAO WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });
@@ -57,7 +62,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<AviaoEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -77,7 +81,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(AviaoEntity aviao)
         {
-            Connection _connection = new Connection();
             string sql = $@"UPDATE AVIAO
                                 SET QUANTIDADEVAGA = @QuantidadeVaga,
                                 CodigoRegistro = @CodigoRegistro,

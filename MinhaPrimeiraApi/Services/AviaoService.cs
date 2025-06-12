@@ -10,9 +10,15 @@ namespace MinhaPrimeiraApi.Services
 {
     public class AviaoService : IAviaoService
     {
+        private IAviaoRepository _repository;
+
+        public AviaoService(IAviaoRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            AviaoRepository _repository = new AviaoRepository();
             await _repository.Delete(id);
             return new MessageResponse
             {
@@ -22,7 +28,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<AviaoGetAllResponse> GetAll()
         {
-            AviaoRepository _repository = new AviaoRepository();
             return new AviaoGetAllResponse
             {
                 Data = await _repository.GetAll()
@@ -31,13 +36,11 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<AviaoEntity> GetById(int id)
         {
-            AviaoRepository _repository = new AviaoRepository();
             return await _repository.GetById(id);
         }
 
         public async Task<MessageResponse> Post(AviaoInsertDTO aviao)
         {
-            AviaoRepository _repository = new AviaoRepository();
             await _repository.Insert(aviao);
             return new MessageResponse
             {
@@ -47,7 +50,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<MessageResponse> Update(AviaoEntity aviao)
         {
-            AviaoRepository _repository = new AviaoRepository();
             await _repository.Update(aviao);
             return new MessageResponse
             {

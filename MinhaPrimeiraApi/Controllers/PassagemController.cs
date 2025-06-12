@@ -14,9 +14,9 @@ namespace MinhaPrimeiraApi.Controllers
     {
         private IPassagemService _service;
 
-        public PassagemController()
+        public PassagemController(IPassagemService passagemService)
         {
-            _service = new PassagemService();
+            _service = passagemService;
         }
 
         [HttpGet]

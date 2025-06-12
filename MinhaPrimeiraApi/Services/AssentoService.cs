@@ -10,9 +10,15 @@ namespace MinhaPrimeiraApi.Services
 {
     public class AssentoService : IAssentoService
     {
+        private IAssentoRepository _repository;
+
+        public AssentoService(IAssentoRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            AssentoRepository _repository = new AssentoRepository();
             await _repository.Delete(id);
             return new MessageResponse
             {
@@ -22,7 +28,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<AssentoGetAllResponse> GetAll()
         {
-            AssentoRepository _repository = new AssentoRepository();
             return new AssentoGetAllResponse
             {
                 Data = await _repository.GetAll()
@@ -31,13 +36,11 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<AssentoEntity> GetById(int id)
         {
-            AssentoRepository _repository = new AssentoRepository();
             return await _repository.GetById(id);
         }
 
         public async Task<MessageResponse> Post(AssentoInsertDTO assento)
         {
-            AssentoRepository _repository = new AssentoRepository();
             await _repository.Insert(assento);
             return new MessageResponse
             {
@@ -47,7 +50,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<MessageResponse> Update(AssentoEntity assento)
         {
-            AssentoRepository _repository = new AssentoRepository();
             await _repository.Update(assento);
             return new MessageResponse
             {

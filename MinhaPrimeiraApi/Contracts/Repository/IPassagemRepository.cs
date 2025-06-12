@@ -10,7 +10,7 @@ using MinhaPrimeiraApi.Entity;
 
 namespace MinhaPrimeiraApi.Contracts.Repository
 {
-    interface IPassagemRepository
+    public interface IPassagemRepository
     {
         Task<IEnumerable<PassagemEntity>> GetAll();
 

@@ -4,14 +4,21 @@ using MinhaPrimeiraApi.Entity;
 using MinhaPrimeiraApi.Repository;
 using MinhaPrimeiraApi.Response.Especialidade;
 using MinhaPrimeiraApi.Response;
+using MinhaPrimeiraApi.Contracts.Repository;
 
 namespace MinhaPrimeiraApi.Services
 {
     public class VooService : IVooService
     {
+        private IVooRepository _repository;
+
+        public VooService(IVooRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            VooRepository _repository = new VooRepository();
             await _repository.Delete(id);
             return new MessageResponse
             {
@@ -21,7 +28,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<VooGetAllResponse> GetAll()
         {
-            VooRepository _repository = new VooRepository();
             return new VooGetAllResponse
             {
                 Data = await _repository.GetAll()
@@ -30,13 +36,11 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<VooEntity> GetById(int id)
         {
-            VooRepository _repository = new VooRepository();
             return await _repository.GetById(id);
         }
 
         public async Task<MessageResponse> Post(VooInsertDTO voo)
         {
-            VooRepository _repository = new VooRepository();
             await _repository.Insert(voo);
             return new MessageResponse
             {
@@ -46,7 +50,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<MessageResponse> Update(VooEntity voo)
         {
-            VooRepository _repository = new VooRepository();
             await _repository.Update(voo);
             return new MessageResponse
             {

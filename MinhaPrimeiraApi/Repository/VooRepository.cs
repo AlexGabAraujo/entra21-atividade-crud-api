@@ -9,14 +9,21 @@ using MinhaPrimeiraApi.Entity;
 using Dapper;
 using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 
 namespace MinhaPrimeiraApi.Repository
 {
     class VooRepository : IVooRepository
     {
+        private IConnection _connection;
+
+        public VooRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<VooEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -37,7 +44,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<VooEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -59,7 +65,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Insert(VooInsertDTO assento)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO VOO (CODIGOVOO, DATAHORAPARTIDA, DATAHORACHEGADA, ORIGEM_ID, DESTINO_ID, AVIAO_ID)
                     VALUES (@CodigoVoo, @DataHoraPartida, @DataHoraChegada, @Origem_Id, @Destino_Id, @Aviao_Id)
@@ -70,7 +75,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(VooEntity voo)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 UPDATE VOO
                     SET CODIGOVOO = @CodigoVoo,
@@ -87,7 +91,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM VOO WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });

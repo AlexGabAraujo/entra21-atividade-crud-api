@@ -9,14 +9,21 @@ using MinhaPrimeiraApi.Entity;
 using Dapper;
 using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 
 namespace MinhaPrimeiraApi.Repository
 {
     internal class AssentoRepository : IAssentoRepository
     {
+        private IConnection _connection;
+
+        public AssentoRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<AssentoEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -34,7 +41,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<AssentoEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -53,7 +59,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Insert(AssentoInsertDTO assento)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO ASSENTO (NUMERO, TIPO, AVIAO_ID)
                     VALUES (@Numero, @Tipo, @Aviao_Id)
@@ -64,7 +69,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(AssentoEntity assento)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 UPDATE ASSENTO
                     SET NUMERO = @Numero,
@@ -78,7 +82,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM ASSENTO WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });

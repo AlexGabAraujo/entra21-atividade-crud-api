@@ -4,14 +4,21 @@ using MinhaPrimeiraApi.Entity;
 using MinhaPrimeiraApi.Repository;
 using MinhaPrimeiraApi.Response.Especialidade;
 using MinhaPrimeiraApi.Response;
+using MinhaPrimeiraApi.Contracts.Repository;
 
 namespace MinhaPrimeiraApi.Services
 {
     public class PassagemService : IPassagemService
     {
+        private IPassagemRepository _repository;
+
+        public PassagemService(IPassagemRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            PassagemRepository _repository = new PassagemRepository();
             await _repository.Delete(id);
             return new MessageResponse
             {
@@ -21,7 +28,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<PassagemGetAllResponse> GetAll()
         {
-            PassagemRepository _repository = new PassagemRepository();
             return new PassagemGetAllResponse
             {
                 Data = await _repository.GetAll()
@@ -30,13 +36,11 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<PassagemEntity> GetById(int id)
         {
-            PassagemRepository _repository = new PassagemRepository();
             return await _repository.GetById(id);
         }
 
         public async Task<MessageResponse> Post(PassagemInsertDTO passagem)
         {
-            PassagemRepository _repository = new PassagemRepository();
             await _repository.Insert(passagem);
             return new MessageResponse
             {
@@ -46,7 +50,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<MessageResponse> Update(PassagemEntity passagem)
         {
-            PassagemRepository _repository = new PassagemRepository();
             await _repository.Update(passagem);
             return new MessageResponse
             {

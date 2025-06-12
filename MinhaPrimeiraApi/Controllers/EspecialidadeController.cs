@@ -16,9 +16,9 @@ namespace MinhaPrimeiraApi.Controllers
     {
         private IEspecialidadeService _service;
 
-        public EspecialidadeController()
+        public EspecialidadeController(IEspecialidadeService especialidadeService)
         {
-            _service = new EspecialidadeService();
+            _service = especialidadeService;
         }
 
         [HttpGet]

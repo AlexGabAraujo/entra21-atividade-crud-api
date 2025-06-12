@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 using MinhaPrimeiraApi.Contracts.Repository;
 using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
@@ -14,9 +15,15 @@ namespace MinhaPrimeiraApi.Repository
 {
     class EspecialidadeRepository : IEspecialidadeRepository
     {
+        private IConnection _connection;
+
+        public EspecialidadeRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<EspecialidadeEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -33,7 +40,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Insert(EspecialidadeInsertDTO especialidade)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO ESPECIALIDADE (NOME)
                                 VALUE (@Nome)
@@ -44,7 +50,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM ESPECIALIDADE WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });
@@ -52,7 +57,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<EspecialidadeEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -69,7 +73,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(EspecialidadeEntity especialidade)
         {
-            Connection _connection = new Connection();
             string sql = @"UPDATE ESPECIALIDADE
                               SET NOME = @Nome
                               WHERE ID = @Id

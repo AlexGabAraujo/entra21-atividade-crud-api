@@ -8,7 +8,7 @@ using MinhaPrimeiraApi.Entity;
 
 namespace MinhaPrimeiraApi.Contracts.Repository
 {
-    interface IEspecialidadeRepository
+    public interface IEspecialidadeRepository
     {
         Task<IEnumerable<EspecialidadeEntity>> GetAll();
 
