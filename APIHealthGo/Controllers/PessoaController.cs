@@ -14,9 +14,9 @@ namespace APIHealthGo.Controllers
     {
         private IPessoaService _service;
 
-        public PessoaController()
+        public PessoaController(IPessoaService pessoaService)
         {
-            _service = new PessoaService();
+            _service = pessoaService;
         }
 
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using atividade_bd_csharp.Entity;
 using Dapper;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.DTO;
 using MyFirstCRUD.Entity;
@@ -12,33 +13,52 @@ namespace MyFirstCRUD.Repository
 {
     public class PessoaRepository : IPessoaRepository
     {
-        private readonly Connection _connection = new Connection();
+        private IConnection _connection;
+
+        public PessoaRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
 
         public async Task<IEnumerable<PessoaEntity>> GetAllPessoa()
         {
-            using var con = _connection.GetConnection();
-            string sql = "SELECT * FROM PESSOA";
-            return await con.QueryAsync<PessoaEntity>(sql);
+            using (MySqlConnection con = _connection.GetConnection())
+            {
+                string sql = @$"SELECT * FROM PESSOA";
+
+                IEnumerable<PessoaEntity> pessoaList = await con.QueryAsync<PessoaEntity>(sql);
+                return pessoaList;
+            }
         }
 
         public async Task<PessoaEntity> GetPessoaById(int id)
         {
-            using var con = _connection.GetConnection();
-            string sql = "SELECT * FROM PESSOA WHERE ID = @id";
-            return await con.QueryFirstOrDefaultAsync<PessoaEntity>(sql, new { id });
+            using (MySqlConnection con = _connection.GetConnection())
+            {
+                string sql = @$"
+                        SELECT * FROM PESSOA WHERE ID = @id
+                ";
+
+                PessoaEntity pessoa = await con.QueryFirstAsync<PessoaEntity>(sql, new { id });
+                return pessoa;
+            }
         }
 
         public async Task InsertPessoa(PessoaInsertDTO pessoa)
         {
-            string sql = @"
-                INSERT INTO PESSOA (NOME, DATANASCIMENTO, CPF, TELEFONE, EMAIL, SENHA, ENDERECOFOTO, CAOGUIA, CEP, BAIRRO, RUA, NUMEROENDERECO, CIDADE_ID)
-                VALUES (@Nome, @DataNascimento, @CPF, @Telefone, @Email, @Senha, @EnderecoFoto, @CaoGuia, @CEP, @Bairro, @Rua, @NumeroEndereco, @Cidade_Id)";
+            string sql = @$"
+                        INSERT INTO PESSOA (NOME, DATANASCIMENTO, CPF, TELEFONE, EMAIL,
+                        SENHA, ENDERECOFOTO, CAOGUIA, CEP, BAIRRO, RUA, NUMEROENDERECO, CIDADE_ID)
+                        VALUES (@Nome, @DataNascimento, @CPF, @Telefone, @Email, @Senha,
+                        @EnderecoFoto, @CaoGuia, @CEP, @Bairro, @Rua, @NumeroEndereco, @Cidade_Id)
+            ";
+
             await _connection.Execute(sql, pessoa);
         }
 
         public async Task UpdatePessoa(PessoaEntity pessoa)
         {
-            string sql = @"
+            string sql = @$"
                 UPDATE PESSOA SET 
                     NOME = @Nome,
                     DATANASCIMENTO = @DataNascimento,
@@ -53,7 +73,9 @@ namespace MyFirstCRUD.Repository
                     RUA = @Rua,
                     NUMEROENDERECO = @NumeroEndereco,
                     CIDADE_ID = @Cidade_Id
-                WHERE ID = @Id";
+                WHERE ID = @Id
+            ";
+            
             await _connection.Execute(sql, pessoa);
         }
 

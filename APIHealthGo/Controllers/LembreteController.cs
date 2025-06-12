@@ -13,9 +13,9 @@ namespace APIHealthGo.Controllers
     {
         private ILembreteService _service;
 
-        public LembreteController()
+        public LembreteController(ILembreteService lembreteService)
         {
-            _service = new LembreteService();
+            _service = lembreteService;
         }
 
         [HttpGet]

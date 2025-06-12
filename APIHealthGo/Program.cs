@@ -14,8 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //Depencendcy
-builder.Services.AddSingleton<IConnection, Connection>();
 builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddSingleton<IConnection, Connection>();
+builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
+
+builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddSingleton<IConnection, Connection>();
+builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
+
+builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddSingleton<IConnection, Connection>();
 builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
 
 builder.Services.AddSwaggerGen();

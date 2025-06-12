@@ -1,26 +1,36 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using atividade_bd_csharp.Entity;
 using Dapper;
-using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
+using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.DTO;
 using MyFirstCRUD.Entity;
 using MyFirstCRUD.infrastructure;
-using MyFirstCRUD.Contracts.Repository;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyFirstCRUD.Repository
 {
     public class LembreteRepository : ILembreteRepository
     {
-        private readonly Connection _connection = new Connection();
+        private IConnection _connection;
+
+        public LembreteRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
 
         public async Task<IEnumerable<LembreteEntity>> GetAllLembrete()
         {
             using (MySqlConnection con = _connection.GetConnection())
             {
-                string sql = @"
+                string sql = @$"
                     SELECT ID, TITULO, DESCRICAO, DATAINICIO, DATAFIM, FREQUENCIA, PESSOA_ID 
-                    FROM LEMBRETE";
-                return await con.QueryAsync<LembreteEntity>(sql);
+                    FROM LEMBRETE
+                ";
+
+                IEnumerable<LembreteEntity> lembreteList = await con.QueryAsync<LembreteEntity>(sql);
+                return lembreteList;
             }
         }
 
@@ -28,8 +38,12 @@ namespace MyFirstCRUD.Repository
         {
             using (MySqlConnection con = _connection.GetConnection())
             {
-                string sql = "SELECT * FROM LEMBRETE WHERE ID = @id";
-                return await con.QueryFirstOrDefaultAsync<LembreteEntity>(sql, new { id });
+                string sql = @$"
+                    SELECT * FROM LEMBRETE WHERE ID = @id
+                ";
+
+                LembreteEntity lembrete = await con.QueryFirstAsync<LembreteEntity>(sql, new { id });
+                return lembrete;
             }
         }
 
@@ -37,7 +51,9 @@ namespace MyFirstCRUD.Repository
         {
             string sql = @"
                 INSERT INTO LEMBRETE (TITULO, DESCRICAO, DATAINICIO, DATAFIM, FREQUENCIA, PESSOA_ID)
-                VALUES (@Titulo, @Descricao, @DataInicio, @DataFim, @Frequencia, @Pessoa_Id)";
+                VALUES (@Titulo, @Descricao, @DataInicio, @DataFim, @Frequencia, @Pessoa_Id)
+            ";
+
             await _connection.Execute(sql, lembrete);
         }
 
@@ -51,7 +67,9 @@ namespace MyFirstCRUD.Repository
                     DATAFIM = @DataFim,
                     FREQUENCIA = @Frequencia,
                     PESSOA_ID = @Pessoa_Id
-                WHERE ID = @Id";
+                WHERE ID = @Id
+            ";
+
             await _connection.Execute(sql, lembrete);
         }
 

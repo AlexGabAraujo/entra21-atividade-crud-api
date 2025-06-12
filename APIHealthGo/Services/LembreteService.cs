@@ -9,40 +9,47 @@ namespace APIHealthGo.Services
 {
     public class LembreteService : ILembreteService
     {
+
+        private ILembreteRepository _repository;
+
+        public LembreteService(ILembreteRepository lembrete)
+        {
+            _repository = lembrete;
+        }
+
         public async Task<LembreteGetAllResponse> GetAllLembrete()
         {
-            LembreteRepository _repository = new LembreteRepository();
             return new LembreteGetAllResponse
             {
                 Data = await _repository.GetAllLembrete()
             };
         }
+
         public async Task<LembreteEntity> GetLembreteById(int id)
         {
-            LembreteRepository _repository = new LembreteRepository();
             return await _repository.GetLembreteById(id);
         }
+
         public async Task<MessageResponse> Post(LembreteInsertDTO lembrete)
         {
-            LembreteRepository _repository = new LembreteRepository();
             await _repository.InsertLembrete(lembrete);
             return new MessageResponse
             {
                 message = "Gerente inserido com sucesso!!"
             };
         }
+
         public async Task<MessageResponse> Update(LembreteEntity lembrete)
         {
-            LembreteRepository _repository = new LembreteRepository();
             await _repository.UpdateLembrete(lembrete);
             return new MessageResponse
             {
                 message = "Gerente atualizado com sucesso!!"
             };
         }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            LembreteRepository _repository = new LembreteRepository();
             await _repository.DeleteLembrete(id);
             return new MessageResponse
             {
