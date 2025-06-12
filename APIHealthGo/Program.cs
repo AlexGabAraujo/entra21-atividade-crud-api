@@ -1,3 +1,10 @@
+using APIHealthGo.Contracts.Service;
+using APIHealthGo.Services;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
+using MyFirstCRUD.Contracts.Repository;
+using MyFirstCRUD.infrastructure;
+using MyFirstCRUD.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//Depencendcy
+builder.Services.AddSingleton<IConnection, Connection>();
+builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

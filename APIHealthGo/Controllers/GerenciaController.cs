@@ -15,12 +15,12 @@ namespace APIHealthGo.Controllers
     {
         private IGerenciaService _service;
 
-        public GerenciaController()
+        public GerenciaController(IGerenciaService gerenciaService)
         {
-            _service = new GerenciaService();
+            _service = gerenciaService;
         }
 
-        [HttpGet]
+    [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAllGerencia());

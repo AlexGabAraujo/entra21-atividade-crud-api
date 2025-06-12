@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using atividade_bd_csharp.Entity;
+using Dapper;
+using MinhaPrimeiraApi.Contracts.Infrastructure;
 using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.DTO;
 using MyFirstCRUD.Entity;
@@ -11,21 +13,44 @@ namespace MyFirstCRUD.Repository
 {
     public class GerenciaRepository : IGerenciaRepository
     {
-        private readonly Connection _connection = new Connection();
+        private IConnection _connection;
+
+        public GerenciaRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
 
         public async Task<IEnumerable<GerenciaEntity>> GetAllGerencia()
         {
-            using var con = _connection.GetConnection();
-            string sql = "SELECT * FROM GERENCIA";
-            return await con.QueryAsync<GerenciaEntity>(sql);
+
+            using (MySqlConnection con = _connection.GetConnection())
+            {
+                string sql = @"SELECT * FROM GERENCIA";
+
+                IEnumerable<GerenciaEntity> gerenciaList = await con.QueryAsync<GerenciaEntity>(sql);
+                return gerenciaList;
+            }
+
         }
+
+
 
         public async Task<GerenciaEntity> GetGerenciaById(int id)
         {
-            using var con = _connection.GetConnection();
-            string sql = "SELECT * FROM GERENCIA WHERE ID = @id";
-            return await con.QueryFirstOrDefaultAsync<GerenciaEntity>(sql, new { id });
+            using (MySqlConnection con = _connection.GetConnection())
+            {
+                string sql = @$"
+                    SELECT * FROM GERENCIA WHERE ID = @id
+                ";
+
+                GerenciaEntity gerencia = await con.QueryFirstAsync<GerenciaEntity>(sql, new { id });
+                return gerencia;
+            }
+
         }
+
+
 
         public async Task InsertGerencia(GerenciaInsertDTO gerencia)
         {
