@@ -181,3 +181,11 @@ C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\obj\Deb
 C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\obj\Debug\net7.0\APIHealthGo.pdb
 C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\obj\Debug\net7.0\APIHealthGo.genruntimeconfig.cache
 C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\obj\Debug\net7.0\ref\APIHealthGo.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\nicolas.santos11\Desktop\entra21-atividade-crud-api\APIHealthGo\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Auth\**" />
+    <Content Remove="Controllers\Auth\**" />
+    <EmbeddedResource Remove="Controllers\Auth\**" />
+    <None Remove="Controllers\Auth\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="MySql.Data" Version="9.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

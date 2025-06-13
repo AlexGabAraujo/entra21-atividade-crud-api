@@ -25,7 +25,7 @@ namespace MyFirstCRUD.Repository
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = @$"
-                    SELECT ID, TITULO, DESCRICAO, DATAINICIO, DATAFIM, FREQUENCIA, PESSOA_ID 
+                    SELECT ID, DESCRICAO, DATAINICIO, PESSOA_ID 
                     FROM LEMBRETE
                 ";
 
@@ -50,8 +50,8 @@ namespace MyFirstCRUD.Repository
         public async Task InsertLembrete(LembreteInsertDTO lembrete)
         {
             string sql = @"
-                INSERT INTO LEMBRETE (TITULO, DESCRICAO, DATAINICIO, DATAFIM, FREQUENCIA, PESSOA_ID)
-                VALUES (@Titulo, @Descricao, @DataInicio, @DataFim, @Frequencia, @Pessoa_Id)
+                INSERT INTO LEMBRETE ( DESCRICAO, DATAINICIO, PESSOA_ID)
+                VALUES ( @Descricao, @DataInicio,@Pessoa_Id)
             ";
 
             await _connection.Execute(sql, lembrete);
@@ -61,11 +61,8 @@ namespace MyFirstCRUD.Repository
         {
             string sql = @"
                 UPDATE LEMBRETE SET 
-                    TITULO = @Titulo,
                     DESCRICAO = @Descricao,
                     DATAINICIO = @DataInicio,
-                    DATAFIM = @DataFim,
-                    FREQUENCIA = @Frequencia,
                     PESSOA_ID = @Pessoa_Id
                 WHERE ID = @Id
             ";

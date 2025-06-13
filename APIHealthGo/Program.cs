@@ -1,5 +1,7 @@
 using APIHealthGo.Contracts.Service;
 using APIHealthGo.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using MinhaPrimeiraApi.Contracts.Infrastructure;
 using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.infrastructure;
@@ -14,13 +16,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //Depencendcy
-builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddScoped<IPessoaService, PessoaService>();
 builder.Services.AddSingleton<IConnection, Connection>();
-builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
+builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
 
-builder.Services.AddScoped<IGerenciaService, GerenciaService>();
+builder.Services.AddScoped<ILembreteService, LembreteService>();
 builder.Services.AddSingleton<IConnection, Connection>();
-builder.Services.AddTransient<IGerenciaRepository, GerenciaRepository>();
+builder.Services.AddTransient<ILembreteRepository, LembreteRepository>();
 
 builder.Services.AddScoped<IGerenciaService, GerenciaService>();
 builder.Services.AddSingleton<IConnection, Connection>();

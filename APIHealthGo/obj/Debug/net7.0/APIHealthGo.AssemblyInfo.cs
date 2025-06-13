@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APIHealthGo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b3557a66dfa808c7012d2070fe4352e1c3e2dbc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("APIHealthGo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APIHealthGo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

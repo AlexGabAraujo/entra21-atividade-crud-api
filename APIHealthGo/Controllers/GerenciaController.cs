@@ -10,7 +10,6 @@ namespace APIHealthGo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
     public class GerenciaController : ControllerBase
     {
         private IGerenciaService _service;
