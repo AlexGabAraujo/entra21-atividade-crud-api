@@ -1,6 +1,7 @@
-﻿using MinhaPrimeiraApi.Entity;
+﻿
+using MinhaPrimeiraApi.Entity;
 
-namespace MinhaPrimeiraApi.Response
+namespace MinhaPrimeiraApi.Response.Nacao
 {
     public class NacaoGetAllResponse
     {

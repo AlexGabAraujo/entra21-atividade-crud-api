@@ -1,18 +1,24 @@
 ﻿using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
-using MinhaPrimeiraApi.Repository;
-using Microsoft.AspNetCore.Mvc;
 using MinhaPrimeiraApi.Contracts.Services;
 using MinhaPrimeiraApi.Response;
-using MeuPrimeiroCrud.Repository;
+using MinhaPrimeiraApi.Contracts.Repository;
+using MinhaPrimeiraApi.Response.Aeroporto;
 
 namespace MinhaPrimeiraApi.Services
 {
     public class AeroportoService : IAeroportoService
     {
+        
+        private IAeroportoRepository _repository;
+
+        public AeroportoService(IAeroportoRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<MessageResponse> Delete(int id)
         {
-            AeroportoRepository _repository = new AeroportoRepository();
             await _repository.Delete(id);
             return new MessageResponse
             {
@@ -22,21 +28,19 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<AeroportoGetAllResponse> GetAll()
         {
-            AeroportoRepository _repository = new AeroportoRepository();
             return new AeroportoGetAllResponse
             {
                 Data = await _repository.GetAll()
             };
         }
+
         public async Task<AeroportoEntity> GetById(int id)
         {
-            AeroportoRepository _repository = new AeroportoRepository();
             return await _repository.GetById(id);
         }
 
         public async Task<MessageResponse> Post(AeroportoInsertDTO aeroporto)
         {
-            AeroportoRepository _repository = new AeroportoRepository();
             await _repository.Insert(aeroporto);
             return new MessageResponse
             {
@@ -47,7 +51,6 @@ namespace MinhaPrimeiraApi.Services
 
         public async Task<MessageResponse> Update(AeroportoEntity aeroporto)
         {
-            AeroportoRepository _repository = new AeroportoRepository();
             await _repository.Update(aeroporto);
             return new MessageResponse
             {

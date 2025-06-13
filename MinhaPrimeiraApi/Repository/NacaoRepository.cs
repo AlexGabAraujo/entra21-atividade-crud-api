@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MinhaPrimeiraApi.Contracts.Connection;
 using MinhaPrimeiraApi.Contracts.Repository;
 using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
@@ -9,10 +10,16 @@ namespace MeuPrimeiroCrud.Repository
 {
     public class NacaoRepository : INacaoRepository
     {
+        
+        private IConnection _connection;
+
+        public NacaoRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
 
         public async Task<IEnumerable<NacaoEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = @$"
@@ -24,24 +31,25 @@ namespace MeuPrimeiroCrud.Repository
                 return nationList;
             }
         }
+
         public async Task Insert(NacaoInsertDTO nacao)
         {
-            Connection _connection = new Connection();
             string sql = @$"
                  INSERT INTO Nacao (Nome)
                               VALUE(@Nome)                                                           
             ";
             await _connection.Execute(sql, nacao);
         }
+
         public async Task Delete(int id)
         {
             Connection _connection = new Connection();
             string sql = "DELETE FROM NACAO WHERE ID = @id";
             await _connection.Execute(sql, new { id });
         }
+
         public async Task<NacaoEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = @$"
@@ -54,9 +62,9 @@ namespace MeuPrimeiroCrud.Repository
                 return nacao;
             }
         }
+
         public async Task Update(NacaoEntity nacao)
         {
-            Connection _connection = new Connection();
             string sql = @$"
                      UPDATE NACAO
                         SET Nome = @Nome
@@ -64,6 +72,5 @@ namespace MeuPrimeiroCrud.Repository
                           ";
             await _connection.Execute(sql, nacao);
         }
-
     }
 }

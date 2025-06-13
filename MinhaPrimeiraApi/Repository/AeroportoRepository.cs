@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MinhaPrimeiraApi.Contracts.Repository;
+﻿using MinhaPrimeiraApi.Contracts.Repository;
 using Dapper;
 using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
-using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
+using MinhaPrimeiraApi.Contracts.Connection;
 
 namespace MinhaPrimeiraApi.Repository
 {
     class AeroportoRepository : IAeroportoRepository
     {
+
+        private IConnection _connection; 
+
+        public AeroportoRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+        
         public async Task<IEnumerable<AeroportoEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = @$"
@@ -30,24 +32,24 @@ namespace MinhaPrimeiraApi.Repository
                 return aeroportoList;
             }
         }
+
         public async Task Insert(AeroportoInsertDTO aeroporto)
         {
-            Connection _connection = new Connection();
             string sql = @$"
                 INSERT INTO AEROPORTO (NOME,CODIGOIATA,CIDADE_ID)
                                 VALUES (@Nome,@CodigoIata, @Cidade_ID)                                                         
             ";
             await _connection.Execute(sql, aeroporto);
         }
+
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM AEROPORTO WHERE ID = @id";
             await _connection.Execute(sql, new { id });
         }
+
         public async Task<AeroportoEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = @$"
@@ -63,9 +65,9 @@ namespace MinhaPrimeiraApi.Repository
                 return aeroporto;
             }
         }
+
         public async Task Update(AeroportoEntity aeroporto)
         {
-            Connection _connection = new Connection();
             string sql = @$"
                       UPDATE AEROPORTO
                                SET NOME = @Nome,

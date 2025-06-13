@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
+using MinhaPrimeiraApi.Contracts.Connection;
 using MinhaPrimeiraApi.Contracts.Repository;
 using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
-using MinhaPrimeiraApi.Infrastructure;
 using MySql.Data.MySqlClient;
 
 namespace MinhaPrimeiraApi.Repository
 {
     class EstadoRepository : IEstadoRepository
     {
+
+        private IConnection _connection;
+
+        public EstadoRepository(IConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<EstadoEntity>> GetAll()
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -35,7 +37,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Insert(EstadoInsertDTO estado)
         {
-            Connection _connection = new Connection();
             string sql = @"
                 INSERT INTO ESTADO (NOME,SIGLA,NACAO_ID)
                                 VALUES (@Nome,@SIGLA,@NACAO_ID)
@@ -46,7 +47,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Delete(int id)
         {
-            Connection _connection = new Connection();
             string sql = "DELETE FROM ESTADO WHERE ID = @id";
 
             await _connection.Execute(sql, new { id });
@@ -54,7 +54,6 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task<EstadoEntity> GetById(int id)
         {
-            Connection _connection = new Connection();
             using (MySqlConnection con = _connection.GetConnection())
             {
                 string sql = $@"
@@ -73,14 +72,13 @@ namespace MinhaPrimeiraApi.Repository
 
         public async Task Update(EstadoEntity estado)
         {
-            Connection _connection = new Connection();
             string sql = @"
                           UPDATE ESTADO
                                SET NOME = @Nome,
                                   SIGLA = @Sigla,
                                NACAO_ID = @Nacao_id
                                WHERE ID = @Id;
-    ";
+                    ";
 
             await _connection.Execute(sql, estado);
         }

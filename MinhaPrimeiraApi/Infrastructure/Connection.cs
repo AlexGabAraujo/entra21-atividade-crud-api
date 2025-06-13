@@ -1,14 +1,10 @@
 ﻿using Dapper;
+using MinhaPrimeiraApi.Contracts.Connection;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MinhaPrimeiraApi.Infrastructure
 {
-    public class Connection
+    public class Connection: IConnection
     {
 
         protected string connectionString = "Server=localhost;Database=healthgo;User=root;Password=root";
@@ -25,3 +21,4 @@ namespace MinhaPrimeiraApi.Infrastructure
         }
     }
 }
+// criar dois, pra put e get

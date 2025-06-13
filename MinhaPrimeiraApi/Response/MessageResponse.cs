@@ -1,4 +1,5 @@
-﻿namespace MinhaPrimeiraApi.Response
+﻿
+namespace MinhaPrimeiraApi.Response
 {
     public class MessageResponse
     {
