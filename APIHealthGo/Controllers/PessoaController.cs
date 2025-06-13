@@ -34,10 +34,26 @@ namespace APIHealthGo.Controllers
             return Ok(await _service.GetPessoaById(id));
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<MessageResponse>> Post(PessoaInsertDTO pessoa)
+        public async Task<IActionResult> Post([FromBody] PessoaInsertDTO pessoa)
         {
-            return Ok(await _service.Post(pessoa));
+            try
+            {
+                var response = await _service.Post(pessoa); // Chama o serviço
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                // Retorna 400 Bad Request se a senha for inválida
+                return BadRequest(new MessageResponse { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // Retorna 500 para outros erros
+                var response = new MessageResponse { message = $"Ocorreu um erro interno: {ex.Message}" };
+                return StatusCode(500, response);
+            }
         }
 
         [HttpPut]

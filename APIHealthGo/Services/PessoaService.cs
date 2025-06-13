@@ -1,6 +1,9 @@
 ﻿using APIHealthGo.Contracts.Service;
 using APIHealthGo.Response;
 using atividade_bd_csharp.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using MyFirstCRUD.Contracts.Repository;
 using MyFirstCRUD.DTO;
 using MyFirstCRUD.Repository;
@@ -28,6 +31,7 @@ namespace APIHealthGo.Services
         {
             return await _repository.GetPessoaById(id);
         }
+
         private void ValidatePassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
@@ -46,23 +50,22 @@ namespace APIHealthGo.Services
                 throw new ArgumentException("A senha deve conter pelo menos um caractere especial (ex: !@#$&*).");
             }
         }
+
         public async Task<MessageResponse> Post(PessoaInsertDTO pessoaDto)
         {
-            // Validate the password format before proceeding
             ValidatePassword(pessoaDto.Senha);
-            //hashing the password and email for security
+
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(pessoaDto.Senha);
-            pessoaDto.Senha = passwordHash; // Store the hashed password in the DTO for consistency
-            string emailHash = BCrypt.Net.BCrypt.HashPassword(pessoaDto.Email);
-            pessoaDto.Email = emailHash; // Store the hashed email in the DTO for consistency
+            pessoaDto.Senha = passwordHash;
 
+            await _repository.InsertPessoa(pessoaDto); // Chama o repositório para inserir os dados
 
-            await _repository.InsertPessoa(pessoaDto);
             return new MessageResponse
             {
                 message = "Pessoa inserida com sucesso!"
             };
         }
+
         public async Task<MessageResponse> Update(PessoaEntity pessoa)
         {
             await _repository.UpdatePessoa(pessoa);
