@@ -1,9 +1,10 @@
 ﻿using MinhaPrimeiraApi.Contracts.Repository;
 using Dapper;
-using MinhaPrimeiraApi.DTO;
 using MinhaPrimeiraApi.Entity;
 using MySql.Data.MySqlClient;
 using MinhaPrimeiraApi.Contracts.Connection;
+using System.Linq;
+using MinhaPrimeiraApi.DTO.Aeroporto;
 
 namespace MinhaPrimeiraApi.Repository
 {
@@ -25,7 +26,7 @@ namespace MinhaPrimeiraApi.Repository
                      SELECT ID AS {nameof(AeroportoEntity.id)},
                             NOME AS {nameof(AeroportoEntity.Nome)},
                             CODIGOIATA AS {nameof(AeroportoEntity.CodigoIata)},
-                           CIDADE_ID {nameof(AeroportoEntity.Cidade_id)}
+                           CIDADE_ID AS {nameof(AeroportoEntity.Cidade_id)}
                        FROM AEROPORTO
                 ";
                 IEnumerable<AeroportoEntity> aeroportoList = await con.QueryAsync<AeroportoEntity>(sql);
@@ -33,7 +34,8 @@ namespace MinhaPrimeiraApi.Repository
             }
         }
 
-        public async Task Insert(AeroportoInsertDTO aeroporto)
+
+        public async Task Insert(AeroportoDTO aeroporto)
         {
             string sql = @$"
                 INSERT INTO AEROPORTO (NOME,CODIGOIATA,CIDADE_ID)
@@ -56,7 +58,7 @@ namespace MinhaPrimeiraApi.Repository
                             SELECT ID AS {nameof(AeroportoEntity.id)},
                             NOME AS {nameof(AeroportoEntity.Nome)},
                             CODIGOIATA AS {nameof(AeroportoEntity.CodigoIata)},
-                           CIDADE_ID {nameof(AeroportoEntity.Cidade_id)}
+                           CIDADE_ID AS {nameof(AeroportoEntity.Cidade_id)}
                        FROM AEROPORTO
                          WHERE ID = @Id
                               
@@ -77,5 +79,7 @@ namespace MinhaPrimeiraApi.Repository
                           ";
             await _connection.Execute(sql, aeroporto);
         }
+
+        
     }
 }

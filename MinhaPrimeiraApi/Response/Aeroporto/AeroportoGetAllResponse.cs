@@ -1,5 +1,4 @@
-﻿
-using MinhaPrimeiraApi.Entity;
+﻿using MinhaPrimeiraApi.Entity;
 
 namespace MinhaPrimeiraApi.Response.Aeroporto
 {

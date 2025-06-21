@@ -1,4 +1,4 @@
-﻿using MinhaPrimeiraApi.DTO;
+﻿using MinhaPrimeiraApi.DTO.Aeroporto;
 using MinhaPrimeiraApi.Entity;
 
 namespace MinhaPrimeiraApi.Contracts.Repository
@@ -9,10 +9,16 @@ namespace MinhaPrimeiraApi.Contracts.Repository
 
         Task<AeroportoEntity> GetById(int id);
 
-        Task Insert(AeroportoInsertDTO aeroporto);
+
+        //Task<IEnumerable<AeroportoDTO>> GetByFilter(Aeroporto_Cidade_Id cidade_Id); //começa apenas com Aeroporto, dps transforma em generico em FiltroDTO
+
+
+        Task Insert(AeroportoDTO aeroporto);
 
         Task Delete(int id);
 
         Task Update(AeroportoEntity aeroporto);
+
+        
     }
 }

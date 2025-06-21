@@ -1,7 +1,6 @@
-﻿
-namespace MinhaPrimeiraApi.DTO
+﻿namespace MinhaPrimeiraApi.DTO.Aeroporto
 {
-    public class AeroportoInsertDTO
+    public class AeroportoDTO
     {
         public string Nome { get; set; }
         
